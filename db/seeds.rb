@@ -15,6 +15,12 @@ NUMBER_OF_BREEDS.times do
       top_speed:      3.1415926 * rand(20..56),
       number_of_legs: rand(1..14)
     )
+    # ADD THESE 4 LINES OF CODE:
+    query = URI.encode_www_form_component([horse.name + " horse", breed.name + " horse"].join(","))
+    downloaded_image = URI.open("https://source.unsplash.com/600x600/?#{query}")
+    horse.image.attach(io: downloaded_image, filename: "m-#{[horse.name, breed.name].join('-')}.jpg")
+    sleep(1)# <=== if youre downloading A LOT of images,
+	# do yourself a favour and DONT get yourself blocked by spamming the API.
   end
 end
 
